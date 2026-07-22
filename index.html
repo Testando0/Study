@@ -178,7 +178,7 @@
     .g-item .cap { position: absolute; left: 16px; bottom: 14px; z-index: 2; font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #fff3b0; }
 
     /* ---------- VALORES ---------- */
-    .pricing-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .pricing-wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
     .price-card { padding: 34px 28px; border-radius: 24px; background: rgba(28, 20, 0, 0.66); border: 1px solid var(--line); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); display: grid; gap: 14px; transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease); }
     .price-card:hover { transform: translateY(-8px); border-color: rgba(255, 200, 0, 0.5); box-shadow: 0 26px 70px rgba(204, 153, 0, 0.28); }
     .price-card.feat { border-color: rgba(240, 196, 138, 0.6); background: linear-gradient(180deg, rgba(204, 153, 0, 0.16), rgba(28, 20, 0, 0.7)); }
@@ -405,21 +405,10 @@
         </div>
 
         <div class="pricing-wrap">
-          <div class="price-card" data-reveal>
-            <span class="tag">Mãos</span>
-            <h3>Esmaltação em Gel</h3>
-            <div class="val">R$ 70<small> / sessão</small></div>
-            <ul>
-              <li>Preparo completo das unhas</li>
-              <li>Esmaltação em gel</li>
-              <li>Finalização com brilho</li>
-            </ul>
-          </div>
-
           <div class="price-card feat" data-reveal>
             <span class="tag">★ Mais pedido</span>
-            <h3>Alongamento em Gel</h3>
-            <div class="val">R$ 130<small> / sessão</small></div>
+            <h3>Aplicação no Molde F1</h3>
+            <div class="val">R$ 140<small> / sessão</small></div>
             <ul>
               <li>Alongamento no molde F1</li>
               <li>Curvatura e acabamento perfeito</li>
@@ -430,11 +419,33 @@
           <div class="price-card" data-reveal>
             <span class="tag">Retoque</span>
             <h3>Manutenção</h3>
-            <div class="val">R$ 60<small> / sessão</small></div>
+            <div class="val">R$ 80<small> / sessão</small></div>
             <ul>
               <li>Retoque do crescimento</li>
               <li>Reequilíbrio da curvatura</li>
               <li>Nova cor se desejar</li>
+            </ul>
+          </div>
+
+          <div class="price-card" data-reveal>
+            <span class="tag">Proteção</span>
+            <h3>Blindagem</h3>
+            <div class="val">R$ 75<small> / sessão</small></div>
+            <ul>
+              <li>Camada protetora reforçada</li>
+              <li>Maior durabilidade</li>
+              <li>Brilho intenso</li>
+            </ul>
+          </div>
+
+          <div class="price-card" data-reveal>
+            <span class="tag">Mãos</span>
+            <h3>Banho em Gel</h3>
+            <div class="val">R$ 75<small> / sessão</small></div>
+            <ul>
+              <li>Preparo completo das unhas</li>
+              <li>Aplicação de gel</li>
+              <li>Finalização com brilho</li>
             </ul>
           </div>
         </div>
@@ -658,7 +669,6 @@
       const bottle = new THREE.Group();
       scene.add(bottle);
 
-      /* vidro (lathe) */
       const profile = [
         [0.02, 0.0], [0.5, 0.03], [0.72, 0.18], [0.82, 0.6], [0.85, 1.3],
         [0.82, 1.95], [0.62, 2.25], [0.34, 2.4], [0.24, 2.45], [0.24, 2.78], [0.26, 2.82],
@@ -671,7 +681,6 @@
       const glass = new THREE.Mesh(new THREE.LatheGeometry(profile, isMobile ? 36 : 56), glassMat);
       bottle.add(glass);
 
-      /* líquido amarelo */
       const liquidProfile = [
         [0.02, 0.06], [0.44, 0.09], [0.66, 0.22], [0.75, 0.6], [0.77, 1.3], [0.74, 1.7], [0.02, 1.72],
       ].map((p) => new THREE.Vector2(p[0], p[1]));
@@ -682,7 +691,6 @@
       const liquid = new THREE.Mesh(new THREE.LatheGeometry(liquidProfile, isMobile ? 32 : 48), liquidMat);
       bottle.add(liquid);
 
-      /* tampa dourada */
       const goldMat = new THREE.MeshStandardMaterial({ color: 0xf0c48a, metalness: 1, roughness: 0.28, envMapIntensity: 1.6 });
       const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.32, 0.78, 40), goldMat);
       cap.position.y = 3.2;
@@ -694,12 +702,10 @@
       collar.position.y = 2.82;
       bottle.add(collar);
 
-      /* pincel (sutil) */
       const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.4, 12), new THREE.MeshStandardMaterial({ color: 0x2a1f00, roughness: 0.6 }));
       stem.position.y = 2.0;
       bottle.add(stem);
 
-      /* rótulo (faixa com nome) */
       const labelCanvas = document.createElement("canvas");
       labelCanvas.width = 1024; labelCanvas.height = 256;
       const lx = labelCanvas.getContext("2d");
@@ -726,7 +732,6 @@
 
       bottle.position.y = -1.55;
 
-      /* glitter amarelo + dourado */
       const gCount = isMobile ? 220 : 550;
       const gGeo = new THREE.BufferGeometry();
       const gPos = new Float32Array(gCount * 3);
@@ -792,7 +797,6 @@
       glitter.frustumCulled = false;
       scene.add(glitter);
 
-      /* brilho do chão */
       const glowCanvas = document.createElement("canvas");
       glowCanvas.width = glowCanvas.height = 256;
       const gctx = glowCanvas.getContext("2d");
@@ -808,7 +812,6 @@
       floorGlow.position.y = -1.7;
       scene.add(floorGlow);
 
-      /* bloom */
       let composer = null;
       if (!isMobile && !reducedMotion) {
         try {
@@ -903,4 +906,4 @@
     init3D();
   </script>
 </body>
-                                                                                                                                                                                                                             </html>
+              </html>
